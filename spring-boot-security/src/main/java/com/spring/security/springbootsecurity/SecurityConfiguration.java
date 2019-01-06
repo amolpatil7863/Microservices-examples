@@ -14,9 +14,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		System.out.println("In auth");
 		BCryptPasswordEncoder encoder = passwordEncoder();
 		auth.inMemoryAuthentication().withUser("amol").password(encoder.encode("amol123")).roles("USER");
-
+		
 	}
 
 	@Bean
@@ -26,7 +27,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
-		httpSecurity.authorizeRequests().anyRequest().fullyAuthenticated().and().httpBasic();
+		httpSecurity.authorizeRequests().antMatchers("/hellod").fullyAuthenticated().and().httpBasic();
 		httpSecurity.csrf().disable();
 	}
 
